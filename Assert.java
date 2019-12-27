@@ -17,16 +17,22 @@
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-/**
- * @test
- */
+public class Assert {
+    static void that(String message, boolean condition) {
+        if (!condition) {
+            throw new AssertionError("Check failed, message: [" + message + "]");
+        }
+    }
 
-public class InstallTest {
-    public static void main(String[] args) throws Exception {
-        Common.install();
+    static void thatFalse(String message, boolean condition) {
+        that(message, !condition);
+    }
 
-        Common.assertTrue("jdk dir", Files.exists(Paths.get("jdk")));
+    static void path(String path) {
+        that(path, Files.exists(Paths.get(path)));
+    }
 
-        Common.uninstall();
+    static void noPath(String path) {
+        thatFalse(path, Files.exists(Paths.get(path)));
     }
 }

@@ -15,38 +15,40 @@
  */
 
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 class Common {
-    static void install(String... options) throws Exception {
-        List<String> cline = Arrays.asList(
+    static void install(String label, String... options) throws Exception {
+        ArrayList<String> cline = new ArrayList<>(Arrays.asList(
             System.getenv("WINDIR") + "/system32/msiexec.exe",
             "/q",
             "/i",
             System.getenv("TESTJDK_MSI_PATH"),
             "/l*v",
-            "install.log",
+            label + "_install.log",
             "INSTALLDIR=" + Paths.get("jdk").toAbsolutePath().toString()
-        );
+        ));
+        System.out.println(cline.getClass());
         cline.addAll(Arrays.asList(options));
 
         System.out.println("Spawning install process, command line: [" + cline + "]");
         int code = new ProcessBuilder(cline).inheritIO().start().waitFor();
 
         if (0 != code) {
-            throw new Exception("Uninstall failure, code: [" + code + "]");
+            throw new Exception("Install failure, code: [" + code + "]");
         }
     }
 
-    static void uninstall() throws Exception {
+    static void uninstall(String label) throws Exception {
         List<String> cline = Arrays.asList(
             System.getenv("WINDIR") + "/system32/msiexec.exe",
             "/q",
             "/x",
             System.getenv("TESTJDK_MSI_PATH"),
             "/l*v",
-            "uninstall.log"
+            label + "_uninstall.log"
         );
 
         System.out.println("Spawning uninstall process, command line: [" + cline + "]");
@@ -57,9 +59,4 @@ class Common {
         }
     }
 
-    static void assertTrue(String message, boolean condition) {
-        if (!condition) {
-            throw new AssertionError("Check failed, message: [" + message + "]");
-        }
-    }
 }
