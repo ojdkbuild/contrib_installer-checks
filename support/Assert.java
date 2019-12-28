@@ -14,25 +14,28 @@
  * limitations under the License.
  */
 
+package support;
+
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class Assert {
-    static void that(String message, boolean condition) {
+
+    public static void assertThat(String message, boolean condition) {
         if (!condition) {
             throw new AssertionError("Check failed, message: [" + message + "]");
         }
     }
 
-    static void thatFalse(String message, boolean condition) {
-        that(message, !condition);
+    public static void assertFalse(String message, boolean condition) {
+        assertThat(message, !condition);
     }
 
-    static void path(String path) {
-        that(path, Files.exists(Paths.get(path)));
+    public static void assertPath(String path) {
+        assertThat(path, Files.exists(Paths.get(path)));
     }
 
-    static void noPath(String path) {
-        thatFalse(path, Files.exists(Paths.get(path)));
+    public static void assertNoPath(String path) {
+        assertFalse(path, Files.exists(Paths.get(path)));
     }
 }

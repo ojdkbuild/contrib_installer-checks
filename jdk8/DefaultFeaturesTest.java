@@ -14,31 +14,23 @@
  * limitations under the License.
  */
 
+import static support.Assert.assertNoPath;
+import static support.Assert.assertPath;
+import static support.Install.install;
+import static support.Uninstall.uninstall;
+
 /**
  * @test
+ * @library ..
  */
 
-public class Jdk8Test {
-
-    static void defaultFeatures() throws Exception {
-        Common.install("defaultFeatures");
-        Assert.path("jdk/bin");
-        Assert.noPath("jdk/webstart");
-        Assert.noPath("jdk/update");
-        Common.uninstall("defaultFeatures");
-    }
-
-    static void jreOnly() throws Exception {
-        Common.install("jreOnly", "ADDLOCAL=jdk");
-        Assert.path("jdk/jre");
-        Assert.noPath("jdk/bin");
-        Assert.noPath("jdk/webstart");
-        Assert.noPath("jdk/update");
-        Common.uninstall("jreOnly");
-    }
+public class DefaultFeaturesTest {
 
     public static void main(String[] args) throws Exception {
-        defaultFeatures();
-        jreOnly();
+        install();
+        assertPath("jdk/bin");
+        assertNoPath("jdk/webstart");
+        assertNoPath("jdk/update");
+        uninstall();
     }
 }
