@@ -25,21 +25,24 @@ import static support.Uninstall.uninstall;
  * @library ..
  */
 
-public class RegistryStandardTest {
+public class RegistryJarTest {
 
     public static void main(String[] args) throws Exception {
-        install("ADDLOCAL=jdk_registry_standard");
+        install("ADDLOCAL=jdk_registry_jar");
 
         String scratchDir = Paths.get("").toAbsolutePath().toString();
-        assertRegKey("HKLM\\Software\\JavaSoft\\Java Runtime Environment",
-                "CurrentVersion", "1.8");
-        assertRegKey("HKLM\\Software\\JavaSoft\\Java Runtime Environment\\1.8",
-                "JavaHome", scratchDir + "\\jdk\\jre\\");
-        assertRegKey("HKLM\\Software\\JavaSoft\\Java Runtime Environment\\1.8",
-                "RuntimeLib", scratchDir + "\\jdk\\jre\\bin\\server\\jvm.dll");
-        assertNoRegKey("HKLM\\Software\\JavaSoft\\Java Development Kit", "CurrentVersion");
-        assertNoRegKey("HKLM\\Software\\JavaSoft\\Java Development Kit\\1.8", "JavaHome");
-        assertNoRegKey("HKLM\\Software\\JavaSoft\\Java Development Kit\\1.8", "RuntimeLib");
+        assertRegKey("HKLM\\Software\\Classes\\.jar",
+                "", "JARFile");
+        assertRegKey("HKLM\\Software\\Classes\\.jar",
+                "Content Type", "application/java-archive");
+        assertRegKey("HKLM\\Software\\Classes\\JARFile",
+                "", "JAR File");
+        assertRegKey("HKLM\\Software\\Classes\\JARFile",
+                "EditFlags", "0x10000");
+        //assertRegKey("HKLM\\Software\\Classes\\JARFile\\Shell\\Open",
+        //        "", "&amp;Launch with ${${PROJECT_NAME}_VENDOR_SHORT} OpenJDK");
+        assertRegKey("HKLM\\Software\\Classes\\JARFile\\Shell\\Open\\Command",
+                "", "\"" + scratchDir + "\\jdk\\jre\\bin\\javaw.exe\" -jar \"%1\" %*");
 
         uninstall();
     }

@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import static support.Assert.assertNoPath;
 import static support.Assert.assertPath;
 import static support.Install.install;
 import static support.Uninstall.uninstall;
@@ -24,17 +23,14 @@ import static support.Uninstall.uninstall;
  * @library ..
  */
 
-public class JreOnlyTest {
+public class AllFeaturesTest {
 
     public static void main(String[] args) throws Exception {
-        install("ADDLOCAL=jdk");
+        install("ADDLOCAL=ALL");
 
+        assertPath("jdk/bin");
         assertPath("jdk/jre");
-        assertPath("jdk/jre/bin/java.exe");
-        assertNoPath("jdk/bin");
-        assertNoPath("jdk/lib/tools.jar");
-        assertNoPath("jdk/webstart");
-        assertNoPath("jdk/update");
+        assertPath("jdk/webstart");
 
         uninstall();
     }

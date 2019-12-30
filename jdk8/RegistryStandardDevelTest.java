@@ -25,21 +25,21 @@ import static support.Uninstall.uninstall;
  * @library ..
  */
 
-public class RegistryStandardTest {
+public class RegistryStandardDevelTest {
 
     public static void main(String[] args) throws Exception {
-        install("ADDLOCAL=jdk_registry_standard");
+        install("ADDLOCAL=jdk_registry_standard_devel");
 
         String scratchDir = Paths.get("").toAbsolutePath().toString();
-        assertRegKey("HKLM\\Software\\JavaSoft\\Java Runtime Environment",
+        assertRegKey("HKLM\\Software\\JavaSoft\\Java Development Kit",
                 "CurrentVersion", "1.8");
-        assertRegKey("HKLM\\Software\\JavaSoft\\Java Runtime Environment\\1.8",
-                "JavaHome", scratchDir + "\\jdk\\jre\\");
-        assertRegKey("HKLM\\Software\\JavaSoft\\Java Runtime Environment\\1.8",
+        assertRegKey("HKLM\\Software\\JavaSoft\\Java Development Kit\\1.8",
+                "JavaHome", scratchDir + "\\jdk\\");
+        assertRegKey("HKLM\\Software\\JavaSoft\\Java Development Kit\\1.8",
                 "RuntimeLib", scratchDir + "\\jdk\\jre\\bin\\server\\jvm.dll");
-        assertNoRegKey("HKLM\\Software\\JavaSoft\\Java Development Kit", "CurrentVersion");
-        assertNoRegKey("HKLM\\Software\\JavaSoft\\Java Development Kit\\1.8", "JavaHome");
-        assertNoRegKey("HKLM\\Software\\JavaSoft\\Java Development Kit\\1.8", "RuntimeLib");
+        assertNoRegKey("HKLM\\Software\\JavaSoft\\Java Runtime Environment", "CurrentVersion");
+        assertNoRegKey("HKLM\\Software\\JavaSoft\\Java Runtime Environment\\1.8", "JavaHome");
+        assertNoRegKey("HKLM\\Software\\JavaSoft\\Java Runtime Environment\\1.8", "RuntimeLib");
 
         uninstall();
     }

@@ -28,10 +28,12 @@ public class DefaultFeaturesTest {
 
     public static void main(String[] args) throws Exception {
         install();
+
         assertPath("jdk/bin");
         assertPath("jdk/jre");
         assertNoPath("jdk/webstart");
         assertNoPath("jdk/update");
+
         uninstall();
     }
 }

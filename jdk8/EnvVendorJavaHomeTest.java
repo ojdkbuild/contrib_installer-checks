@@ -15,9 +15,12 @@
  */
 
 import java.nio.file.Paths;
+import java.util.Optional;
 
 import static support.Assert.*;
 import static support.Install.install;
+import static support.Registry.REGISTRY_ENV_PATH;
+import static support.Registry.queryRegistry;
 import static support.Uninstall.uninstall;
 
 /**
@@ -25,21 +28,25 @@ import static support.Uninstall.uninstall;
  * @library ..
  */
 
-public class RegistryStandardTest {
+public class EnvVendorJavaHomeTest {
 
     public static void main(String[] args) throws Exception {
-        install("ADDLOCAL=jdk_registry_standard");
+        install("ADDLOCAL=jdk_env_vendor_java_home");
 
         String scratchDir = Paths.get("").toAbsolutePath().toString();
-        assertRegKey("HKLM\\Software\\JavaSoft\\Java Runtime Environment",
-                "CurrentVersion", "1.8");
-        assertRegKey("HKLM\\Software\\JavaSoft\\Java Runtime Environment\\1.8",
-                "JavaHome", scratchDir + "\\jdk\\jre\\");
-        assertRegKey("HKLM\\Software\\JavaSoft\\Java Runtime Environment\\1.8",
-                "RuntimeLib", scratchDir + "\\jdk\\jre\\bin\\server\\jvm.dll");
-        assertNoRegKey("HKLM\\Software\\JavaSoft\\Java Development Kit", "CurrentVersion");
-        assertNoRegKey("HKLM\\Software\\JavaSoft\\Java Development Kit\\1.8", "JavaHome");
-        assertNoRegKey("HKLM\\Software\\JavaSoft\\Java Development Kit\\1.8", "RuntimeLib");
+        Optional<String> ojdkbuild = queryRegistry(REGISTRY_ENV_PATH,"OJDKBUILD_JAVA_HOME");
+        Optional<String> redhat = queryRegistry(REGISTRY_ENV_PATH,"REDHAT_JAVA_HOME");
+        String vendor = "";
+        if (ojdkbuild.isPresent()) {
+            vendor = ojdkbuild.get();
+        } else if (redhat.isPresent()) {
+            vendor = redhat.get();
+        }
+        assertFalse("vendor", vendor.isEmpty());
+        assertEquals("vendor", scratchDir + "\\jdk\\", vendor);
+        String pathVar = queryRegistry(REGISTRY_ENV_PATH, "PATH").get();
+        assertFalse(pathVar, pathVar.endsWith(scratchDir + "\\jdk\\bin;" + scratchDir + "\\jdk\\jre\\bin"));
+        assertNoRegKey(REGISTRY_ENV_PATH, "JAVA_HOME");
 
         uninstall();
     }

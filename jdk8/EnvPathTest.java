@@ -14,9 +14,12 @@
  * limitations under the License.
  */
 
-import static support.Assert.assertNoPath;
-import static support.Assert.assertPath;
+import java.nio.file.Paths;
+
+import static support.Assert.*;
 import static support.Install.install;
+import static support.Registry.REGISTRY_ENV_PATH;
+import static support.Registry.queryRegistry;
 import static support.Uninstall.uninstall;
 
 /**
@@ -24,17 +27,17 @@ import static support.Uninstall.uninstall;
  * @library ..
  */
 
-public class JreOnlyTest {
+public class EnvPathTest {
 
     public static void main(String[] args) throws Exception {
-        install("ADDLOCAL=jdk");
+        install("ADDLOCAL=jdk_env_path");
 
-        assertPath("jdk/jre");
-        assertPath("jdk/jre/bin/java.exe");
-        assertNoPath("jdk/bin");
-        assertNoPath("jdk/lib/tools.jar");
-        assertNoPath("jdk/webstart");
-        assertNoPath("jdk/update");
+        String scratchDir = Paths.get("").toAbsolutePath().toString();
+        String pathVar = queryRegistry(REGISTRY_ENV_PATH, "PATH").get();
+        assertThat(pathVar, pathVar.endsWith(scratchDir + "\\jdk\\bin;" + scratchDir + "\\jdk\\jre\\bin"));
+        assertNoRegKey(REGISTRY_ENV_PATH, "JAVA_HOME");
+        assertNoRegKey(REGISTRY_ENV_PATH, "OJDKBUILD_JAVA_HOME");
+        assertNoRegKey(REGISTRY_ENV_PATH, "REDHAT_JAVA_HOME");
 
         uninstall();
     }

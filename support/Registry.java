@@ -29,6 +29,8 @@ import static support.Format.formatCommandLine;
 
 public class Registry {
 
+    public static final String REGISTRY_ENV_PATH = "HKLM\\System\\CurrentControlSet\\Control\\Session Manager\\Environment";
+
     public static Optional<String> queryRegistry(String path, String key) throws Exception {
         ArrayList<String> cline = new ArrayList<>(Arrays.asList(
                 System.getenv("WINDIR") + "/system32/reg.exe",
