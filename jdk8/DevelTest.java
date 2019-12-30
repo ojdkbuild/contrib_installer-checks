@@ -24,12 +24,14 @@ import static support.Uninstall.uninstall;
  * @library ..
  */
 
-public class DefaultFeaturesTest {
+public class DevelTest {
 
     public static void main(String[] args) throws Exception {
-        install();
-        assertPath("jdk/bin");
+        install("ADDLOCAL=jdk_devel");
         assertPath("jdk/jre");
+        assertPath("jdk/jre/bin/java.exe");
+        assertPath("jdk/bin/java.exe");
+        assertPath("jdk/lib/tools.jar");
         assertNoPath("jdk/webstart");
         assertNoPath("jdk/update");
         uninstall();

@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-import static support.Assert.assertNoPath;
-import static support.Assert.assertPath;
+import static support.Assert.*;
 import static support.Install.install;
 import static support.Uninstall.uninstall;
 
@@ -24,14 +23,12 @@ import static support.Uninstall.uninstall;
  * @library ..
  */
 
-public class DefaultFeaturesTest {
+public class RegistryStandardTest {
 
     public static void main(String[] args) throws Exception {
-        install();
-        assertPath("jdk/bin");
-        assertPath("jdk/jre");
-        assertNoPath("jdk/webstart");
-        assertNoPath("jdk/update");
+        install("ADDLOCAL=jdk_registry_standard");
+        assertRegKey("HKLM\\Software\\JavaSoft\\Java Runtime Environment", "CurrentVersion", "1.8");
+        assertNoRegKey("HKLM\\Software\\JavaSoft\\Java Development Kit", "CurrentVersion");
         uninstall();
     }
 }

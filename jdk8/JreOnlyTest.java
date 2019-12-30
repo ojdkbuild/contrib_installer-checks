@@ -29,7 +29,9 @@ public class JreOnlyTest {
     public static void main(String[] args) throws Exception {
         install("ADDLOCAL=jdk");
         assertPath("jdk/jre");
+        assertPath("jdk/jre/bin/java.exe");
         assertNoPath("jdk/bin");
+        assertNoPath("jdk/lib/tools.jar");
         assertNoPath("jdk/webstart");
         assertNoPath("jdk/update");
         uninstall();

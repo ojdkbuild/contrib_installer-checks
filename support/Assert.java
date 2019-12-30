@@ -18,6 +18,9 @@ package support;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Optional;
+
+import static support.Registry.queryRegistry;
 
 public class Assert {
 
@@ -37,5 +40,24 @@ public class Assert {
 
     public static void assertNoPath(String path) {
         assertFalse(path, Files.exists(Paths.get(path)));
+    }
+
+    public static void assertEquals(String message, String expected, String actual) {
+        if (!(null == expected || null == actual || expected.equals(actual))) {
+            throw new AssertionError("Check failed, expected: [" + expected + "]," +
+                    " actual: [" + actual + "], message: [" + message + "]");
+        }
+    }
+
+    public static void assertRegKey(String path, String key, String expected) throws Exception {
+        Optional<String> opt = queryRegistry(path, key);
+        String msg = path + ":" + key;
+        assertThat(msg, opt.isPresent());
+        assertEquals(msg, expected, opt.get());
+    }
+
+    public static void assertNoRegKey(String path, String key) throws Exception {
+        Optional<String> opt = queryRegistry(path, key);
+        assertFalse(path + ":" + key, opt.isPresent());
     }
 }

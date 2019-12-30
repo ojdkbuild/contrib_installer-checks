@@ -34,7 +34,10 @@ public class Uninstall {
         );
 
         System.out.println("Spawning uninstall process, command line: [" + formatCommandLine(cline) + "]");
-        int code = new ProcessBuilder(cline).inheritIO().start().waitFor();
+        int code = new ProcessBuilder(cline)
+                .inheritIO()
+                .start()
+                .waitFor();
 
         if (0 != code) {
             throw new Exception("Uninstall failure, code: [" + code + "]");

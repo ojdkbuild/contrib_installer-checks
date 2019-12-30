@@ -34,11 +34,13 @@ public class Install {
             "install.log",
             "INSTALLDIR=" + Paths.get("jdk").toAbsolutePath().toString()
         ));
-        System.out.println(cline.getClass());
         cline.addAll(Arrays.asList(options));
 
         System.out.println("Spawning install process, command line: [" + formatCommandLine(cline) + "]");
-        int code = new ProcessBuilder(cline).inheritIO().start().waitFor();
+        int code = new ProcessBuilder(cline)
+                .inheritIO()
+                .start()
+                .waitFor();
 
         if (0 != code) {
             throw new Exception("Install failure, code: [" + code + "]");
