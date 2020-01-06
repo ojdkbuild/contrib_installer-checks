@@ -40,6 +40,12 @@ public class RegistryStandardTest {
         assertNoRegKey("HKLM\\Software\\JavaSoft\\Java Development Kit", "CurrentVersion");
         assertNoRegKey("HKLM\\Software\\JavaSoft\\Java Development Kit\\1.8", "JavaHome");
         assertNoRegKey("HKLM\\Software\\JavaSoft\\Java Development Kit\\1.8", "RuntimeLib");
+        assertPath("jdk/jre");
+        assertPath("jdk/jre/bin/java.exe");
+        assertNoPath("jdk/bin");
+        assertNoPath("jdk/lib/tools.jar");
+        assertNoPath("jdk/webstart");
+        assertNoPath("jdk/update");
 
         uninstall();
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019, akashche at redhat.com
+ * Copyright 2020, akashche at redhat.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,8 @@ import java.nio.file.Paths;
 
 import static support.Assert.*;
 import static support.Install.install;
+import static support.Registry.REGISTRY_ENV_PATH;
+import static support.Registry.queryRegistry;
 import static support.Uninstall.uninstall;
 
 /**
@@ -25,26 +27,17 @@ import static support.Uninstall.uninstall;
  * @library ..
  */
 
-public class RegistryStandardDevelTest {
+public class WebstartEnvTest {
 
     public static void main(String[] args) throws Exception {
-        install("ADDLOCAL=jdk_registry_standard_devel");
+        install("ADDLOCAL=webstart_env");
 
         String scratchDir = Paths.get("").toAbsolutePath().toString();
-        assertRegKey("HKLM\\Software\\JavaSoft\\Java Development Kit",
-                "CurrentVersion", "1.8");
-        assertRegKey("HKLM\\Software\\JavaSoft\\Java Development Kit\\1.8",
-                "JavaHome", scratchDir + "\\jdk\\");
-        assertRegKey("HKLM\\Software\\JavaSoft\\Java Development Kit\\1.8",
-                "RuntimeLib", scratchDir + "\\jdk\\jre\\bin\\server\\jvm.dll");
-        assertNoRegKey("HKLM\\Software\\JavaSoft\\Java Runtime Environment", "CurrentVersion");
-        assertNoRegKey("HKLM\\Software\\JavaSoft\\Java Runtime Environment\\1.8", "JavaHome");
-        assertNoRegKey("HKLM\\Software\\JavaSoft\\Java Runtime Environment\\1.8", "RuntimeLib");
-        assertPath("jdk/jre");
-        assertPath("jdk/jre/bin/java.exe");
+        String pathVar = queryRegistry(REGISTRY_ENV_PATH, "PATH").get();
+        assertThat(pathVar, pathVar.endsWith(scratchDir + "\\jdk\\webstart\\"));
+        assertPath("jdk/webstart");
+        assertNoPath("jdk/jre");
         assertNoPath("jdk/bin");
-        assertNoPath("jdk/lib/tools.jar");
-        assertNoPath("jdk/webstart");
         assertNoPath("jdk/update");
 
         uninstall();

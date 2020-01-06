@@ -38,6 +38,12 @@ public class EnvJavaHomeTest {
         assertFalse(pathVar, pathVar.endsWith(scratchDir + "\\jdk\\bin;" + scratchDir + "\\jdk\\jre\\bin"));
         assertNoRegKey(REGISTRY_ENV_PATH, "OJDKBUILD_JAVA_HOME");
         assertNoRegKey(REGISTRY_ENV_PATH, "REDHAT_JAVA_HOME");
+        assertPath("jdk/jre");
+        assertPath("jdk/jre/bin/java.exe");
+        assertNoPath("jdk/bin");
+        assertNoPath("jdk/lib/tools.jar");
+        assertNoPath("jdk/webstart");
+        assertNoPath("jdk/update");
 
         uninstall();
     }

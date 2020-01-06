@@ -69,6 +69,11 @@ public class Registry {
         String[] parts = lines.get(1).split(" {4}");
 
         String res = parts[parts.length - 1];
+
+        if ("REG_SZ".equals(res)) {
+            return Optional.of("");
+        }
+
         return Optional.of(res);
     }
 }
