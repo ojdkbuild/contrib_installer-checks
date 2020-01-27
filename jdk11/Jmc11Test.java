@@ -28,19 +28,22 @@ public class Jmc11Test {
 
     public static void main(String[] args) throws Exception {
         install("ADDLOCAL=jmc");
+        try {
 
-        // todo: custom actions
+            // todo: custom actions
 
-        assertPath("jdk/missioncontrol");
-        assertPath("jdk/missioncontrol/jmc.exe");
-        assertPath("jdk/missioncontrol/install/local_cleaner.exe");
-        assertNoPath("jdk/bin");
-        assertNoPath("jdk/conf");
-        assertNoPath("jdk/include");
-        assertNoPath("jdk/jmods");
-        assertNoPath("jdk/legal");
-        assertNoPath("jdk/lib");
+            assertPath("jdk/missioncontrol");
+            assertPath("jdk/missioncontrol/jmc.exe");
+            assertPath("jdk/missioncontrol/install/local_cleaner.exe");
+            assertNoPath("jdk/bin");
+            assertNoPath("jdk/conf");
+            assertNoPath("jdk/include");
+            assertNoPath("jdk/jmods");
+            assertNoPath("jdk/legal");
+            assertNoPath("jdk/lib");
 
-        uninstall();
+        } finally {
+            uninstall();
+        }
     }
 }

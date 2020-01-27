@@ -31,16 +31,19 @@ public class JmcEnv11Test {
 
     public static void main(String[] args) throws Exception {
         install("ADDLOCAL=jmc_env");
+        try {
 
-        String scratchDir = Paths.get("").toAbsolutePath().toString();
-        String pathVar = queryRegistry(REGISTRY_ENV_PATH, "PATH").get();
-        assertThat(pathVar, pathVar.endsWith(scratchDir + "\\jdk\\missioncontrol\\"));
-        assertNoRegKey(REGISTRY_ENV_PATH, "JAVA_HOME");
-        assertNoRegKey(REGISTRY_ENV_PATH, "OJDKBUILD_JAVA_HOME");
-        assertNoRegKey(REGISTRY_ENV_PATH, "REDHAT_JAVA_HOME");
-        assertPath("jdk/missioncontrol");
-        assertNoPath("jdk/bin");
+            String scratchDir = Paths.get("").toAbsolutePath().toString();
+            String pathVar = queryRegistry(REGISTRY_ENV_PATH, "PATH").get();
+            assertThat(pathVar, pathVar.endsWith(scratchDir + "\\jdk\\missioncontrol\\"));
+            assertNoRegKey(REGISTRY_ENV_PATH, "JAVA_HOME");
+            assertNoRegKey(REGISTRY_ENV_PATH, "OJDKBUILD_JAVA_HOME");
+            assertNoRegKey(REGISTRY_ENV_PATH, "REDHAT_JAVA_HOME");
+            assertPath("jdk/missioncontrol");
+            assertNoPath("jdk/bin");
 
-        uninstall();
+        } finally {
+            uninstall();
+        }
     }
 }

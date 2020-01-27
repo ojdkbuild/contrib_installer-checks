@@ -27,16 +27,19 @@ public class OpenjfxTest {
 
     public static void main(String[] args) throws Exception {
         install("ADDLOCAL=openjfx");
+        try {
 
-        assertPath("jdk/bin");
-        assertPath("jdk/jre/bin/jfxwebkit.dll");
-        assertPath("jdk/jre/lib/ext/jfxrt.jar");
-        assertPath("jdk/javafx-src.zip");
-        assertNoPath("jdk/bin/java.exe");
-        assertNoPath("jdk/jre/bin/java.exe");
-        assertNoPath("jdk/webstart");
-        assertNoPath("jdk/update");
+            assertPath("jdk/bin");
+            assertPath("jdk/jre/bin/jfxwebkit.dll");
+            assertPath("jdk/jre/lib/ext/jfxrt.jar");
+            assertPath("jdk/javafx-src.zip");
+            assertNoPath("jdk/bin/java.exe");
+            assertNoPath("jdk/jre/bin/java.exe");
+            assertNoPath("jdk/webstart");
+            assertNoPath("jdk/update");
 
-        uninstall();
+        } finally {
+            uninstall();
+        }
     }
 }

@@ -29,19 +29,22 @@ public class RegistryStandardLatestTest {
 
     public static void main(String[] args) throws Exception {
         install("ADDLOCAL=jdk_registry_standard");
+        try {
 
-        // todo: checks with version
+            // todo: checks with version
 
-        String scratchDir = Paths.get("").toAbsolutePath().toString();
-        //assertRegKey("HKLM\\Software\\JavaSoft\\JDK\\11.0",
-        //        "JavaHome", scratchDir + "\\jdk\\");
-        //assertRegKey("HKLM\\Software\\JavaSoft\\JDK\\11.0",
-        //        "RuntimeLib", scratchDir + "\\jdk\\bin\\server\\jvm.dll");
-        assertPath("jdk/bin/java.exe");
-        assertPath("jdk/bin/server/jvm.dll");
-        assertPath("jdk/lib/modules");
-        assertNoPath("jdk/missioncontrol");
+            String scratchDir = Paths.get("").toAbsolutePath().toString();
+            //assertRegKey("HKLM\\Software\\JavaSoft\\JDK\\11.0",
+            //        "JavaHome", scratchDir + "\\jdk\\");
+            //assertRegKey("HKLM\\Software\\JavaSoft\\JDK\\11.0",
+            //        "RuntimeLib", scratchDir + "\\jdk\\bin\\server\\jvm.dll");
+            assertPath("jdk/bin/java.exe");
+            assertPath("jdk/bin/server/jvm.dll");
+            assertPath("jdk/lib/modules");
+            assertNoPath("jdk/missioncontrol");
 
-        uninstall();
+        } finally {
+            uninstall();
+        }
     }
 }

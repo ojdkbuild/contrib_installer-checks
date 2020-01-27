@@ -27,18 +27,21 @@ public class AllFeaturesLatestTest {
 
     public static void main(String[] args) throws Exception {
         install("ADDLOCAL=ALL");
+        try {
 
-        assertPath("jdk/bin");
-        assertPath("jdk/bin/java.exe");
-        assertPath("jdk/bin/server/jvm.dll");
-        assertPath("jdk/lib/modules");
-        assertPath("jdk/conf");
-        assertPath("jdk/include");
-        assertPath("jdk/jmods");
-        assertPath("jdk/legal");
-        assertPath("jdk/lib");
-        assertPath("jdk/missioncontrol");
+            assertPath("jdk/bin");
+            assertPath("jdk/bin/java.exe");
+            assertPath("jdk/bin/server/jvm.dll");
+            assertPath("jdk/lib/modules");
+            assertPath("jdk/conf");
+            assertPath("jdk/include");
+            assertPath("jdk/jmods");
+            assertPath("jdk/legal");
+            assertPath("jdk/lib");
+            assertPath("jdk/missioncontrol");
 
-        uninstall();
+        } finally {
+            uninstall();
+        }
     }
 }

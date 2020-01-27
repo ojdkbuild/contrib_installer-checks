@@ -27,16 +27,19 @@ public class WebstartTest {
 
     public static void main(String[] args) throws Exception {
         install("ADDLOCAL=webstart");
+        try {
 
-        assertPath("jdk/webstart");
-        assertPath("jdk/webstart/javaws.exe");
-        assertPath("jdk/webstart/javaws.jar");
-        assertPath("jdk/webstart/javaws_options.txt");
-        assertPath("jdk/webstart/javaws_splash.png");
-        assertNoPath("jdk/jre");
-        assertNoPath("jdk/bin");
-        assertNoPath("jdk/update");
+            assertPath("jdk/webstart");
+            assertPath("jdk/webstart/javaws.exe");
+            assertPath("jdk/webstart/javaws.jar");
+            assertPath("jdk/webstart/javaws_options.txt");
+            assertPath("jdk/webstart/javaws_splash.png");
+            assertNoPath("jdk/jre");
+            assertNoPath("jdk/bin");
+            assertNoPath("jdk/update");
 
-        uninstall();
+        } finally {
+            uninstall();
+        }
     }
 }

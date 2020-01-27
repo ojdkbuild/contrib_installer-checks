@@ -29,27 +29,30 @@ public class RegistryJarTest {
 
     public static void main(String[] args) throws Exception {
         install("ADDLOCAL=jdk_registry_jar");
+        try {
 
-        String scratchDir = Paths.get("").toAbsolutePath().toString();
-        assertRegKey("HKLM\\Software\\Classes\\.jar",
-                "", "JARFile");
-        assertRegKey("HKLM\\Software\\Classes\\.jar",
-                "Content Type", "application/java-archive");
-        assertRegKey("HKLM\\Software\\Classes\\JARFile",
-                "", "JAR File");
-        assertRegKey("HKLM\\Software\\Classes\\JARFile",
-                "EditFlags", "0x10000");
-        //assertRegKey("HKLM\\Software\\Classes\\JARFile\\Shell\\Open",
-        //        "", "&amp;Launch with ${${PROJECT_NAME}_VENDOR_SHORT} OpenJDK");
-        assertRegKey("HKLM\\Software\\Classes\\JARFile\\Shell\\Open\\Command",
-                "", "\"" + scratchDir + "\\jdk\\jre\\bin\\javaw.exe\" -jar \"%1\" %*");
-        assertPath("jdk/jre");
-        assertPath("jdk/jre/bin/java.exe");
-        assertNoPath("jdk/bin");
-        assertNoPath("jdk/lib/tools.jar");
-        assertNoPath("jdk/webstart");
-        assertNoPath("jdk/update");
+            String scratchDir = Paths.get("").toAbsolutePath().toString();
+            assertRegKey("HKLM\\Software\\Classes\\.jar",
+                    "", "JARFile");
+            assertRegKey("HKLM\\Software\\Classes\\.jar",
+                    "Content Type", "application/java-archive");
+            assertRegKey("HKLM\\Software\\Classes\\JARFile",
+                    "", "JAR File");
+            assertRegKey("HKLM\\Software\\Classes\\JARFile",
+                    "EditFlags", "0x10000");
+            //assertRegKey("HKLM\\Software\\Classes\\JARFile\\Shell\\Open",
+            //        "", "&amp;Launch with ${${PROJECT_NAME}_VENDOR_SHORT} OpenJDK");
+            assertRegKey("HKLM\\Software\\Classes\\JARFile\\Shell\\Open\\Command",
+                    "", "\"" + scratchDir + "\\jdk\\jre\\bin\\javaw.exe\" -jar \"%1\" %*");
+            assertPath("jdk/jre");
+            assertPath("jdk/jre/bin/java.exe");
+            assertNoPath("jdk/bin");
+            assertNoPath("jdk/lib/tools.jar");
+            assertNoPath("jdk/webstart");
+            assertNoPath("jdk/update");
 
-        uninstall();
+        } finally {
+            uninstall();
+        }
     }
 }

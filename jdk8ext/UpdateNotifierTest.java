@@ -27,20 +27,23 @@ public class UpdateNotifierTest {
 
     public static void main(String[] args) throws Exception {
         install("ADDLOCAL=update_notifier");
+        try {
 
         // todo: find out the way to test custom actions
 
-        assertPath("jdk/update");
-        assertPath("jdk/update/checker.exe");
-        assertPath("jdk/update/checker.vbs");
-        assertPath("jdk/update/checker.crt");
-        assertPath("jdk/update/notifier.exe");
-        assertPath("jdk/update/config.json");
-        assertPath("jdk/update/icon.bmp");
-        assertNoPath("jdk/bin");
-        assertNoPath("jdk/jre");
-        assertNoPath("jdk/webstart");
+            assertPath("jdk/update");
+            assertPath("jdk/update/checker.exe");
+            assertPath("jdk/update/checker.vbs");
+            assertPath("jdk/update/checker.crt");
+            assertPath("jdk/update/notifier.exe");
+            assertPath("jdk/update/config.json");
+            assertPath("jdk/update/icon.bmp");
+            assertNoPath("jdk/bin");
+            assertNoPath("jdk/jre");
+            assertNoPath("jdk/webstart");
 
-        uninstall();
+        } finally {
+            uninstall();
+        }
     }
 }

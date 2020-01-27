@@ -27,14 +27,17 @@ public class WebstartMigrateTest {
 
     public static void main(String[] args) throws Exception {
         install("ADDLOCAL=webstart_migrate");
+        try {
 
         // todo: find out the way to actually test migrate logic
 
-        assertPath("jdk/webstart");
-        assertNoPath("jdk/jre");
-        assertNoPath("jdk/bin");
-        assertNoPath("jdk/update");
+            assertPath("jdk/webstart");
+            assertNoPath("jdk/jre");
+            assertNoPath("jdk/bin");
+            assertNoPath("jdk/update");
 
-        uninstall();
+        } finally {
+            uninstall();
+        }
     }
 }

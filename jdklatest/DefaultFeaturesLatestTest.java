@@ -28,18 +28,21 @@ public class DefaultFeaturesLatestTest {
 
     public static void main(String[] args) throws Exception {
         install("");
+        try {
 
-        assertPath("jdk/bin");
-        assertPath("jdk/bin/java.exe");
-        assertPath("jdk/bin/server/jvm.dll");
-        assertPath("jdk/lib/modules");
-        assertPath("jdk/conf");
-        assertPath("jdk/include");
-        assertPath("jdk/jmods");
-        assertPath("jdk/legal");
-        assertPath("jdk/lib");
-        assertNoPath("jdk/missioncontrol");
+            assertPath("jdk/bin");
+            assertPath("jdk/bin/java.exe");
+            assertPath("jdk/bin/server/jvm.dll");
+            assertPath("jdk/lib/modules");
+            assertPath("jdk/conf");
+            assertPath("jdk/include");
+            assertPath("jdk/jmods");
+            assertPath("jdk/legal");
+            assertPath("jdk/lib");
+            assertNoPath("jdk/missioncontrol");
 
-        uninstall();
+        } finally {
+            uninstall();
+        }
     }
 }

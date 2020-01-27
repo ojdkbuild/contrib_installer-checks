@@ -28,14 +28,17 @@ public class DevelTest {
 
     public static void main(String[] args) throws Exception {
         install("ADDLOCAL=jdk_devel");
+        try {
 
-        assertPath("jdk/jre");
-        assertPath("jdk/jre/bin/java.exe");
-        assertPath("jdk/bin/java.exe");
-        assertPath("jdk/lib/tools.jar");
-        assertNoPath("jdk/webstart");
-        assertNoPath("jdk/update");
+            assertPath("jdk/jre");
+            assertPath("jdk/jre/bin/java.exe");
+            assertPath("jdk/bin/java.exe");
+            assertPath("jdk/lib/tools.jar");
+            assertNoPath("jdk/webstart");
+            assertNoPath("jdk/update");
 
-        uninstall();
+        } finally {
+            uninstall();
+        }
     }
 }

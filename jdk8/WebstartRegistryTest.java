@@ -29,35 +29,38 @@ public class WebstartRegistryTest {
 
     public static void main(String[] args) throws Exception {
         install("ADDLOCAL=webstart_registry");
+        try {
 
-        String scratchDir = Paths.get("").toAbsolutePath().toString();
-        assertRegKey("HKLM\\Software\\Classes\\.jnlp",
-                "", "JNLPFile");
-        assertRegKey("HKLM\\Software\\Classes\\jnlp",
-                "", "URL:jnlp Protocol");
-        assertRegKey("HKLM\\Software\\Classes\\jnlp",
-                "URL Protocol", "");
-        assertRegKey("HKLM\\Software\\Classes\\jnlp\\Shell\\Open\\Command",
-                "", "\"" + scratchDir + "\\jdk\\webstart\\javaws.exe\" \"%1\"");
-        assertRegKey("HKLM\\Software\\Classes\\jnlps",
-                "", "URL:jnlps Protocol");
-        assertRegKey("HKLM\\Software\\Classes\\jnlps",
-                "URL Protocol", "");
-        assertRegKey("HKLM\\Software\\Classes\\jnlps\\Shell\\Open\\Command",
-                "", "\"" + scratchDir + "\\jdk\\webstart\\javaws.exe\" \"%1\"");
-        assertRegKey("HKLM\\Software\\Classes\\JNLPFile",
-                "", "JNLP File");
-        assertRegKey("HKLM\\Software\\Classes\\JNLPFile",
-                "EditFlags", "0x10000");
-        //assertRegKey("HKLM\\Software\\Classes\\JNLPFile\\Shell\\Open",
-        //        "", "&amp;Launch with ${openjdk_VENDOR_SHORT} WebStart");
-        assertRegKey("HKLM\\Software\\Classes\\JNLPFile\\Shell\\Open\\Command",
-                "", "\"" + scratchDir + "\\jdk\\webstart\\javaws.exe\" \"%1\"");
-        assertPath("jdk/webstart");
-        assertNoPath("jdk/jre");
-        assertNoPath("jdk/bin");
-        assertNoPath("jdk/update");
+            String scratchDir = Paths.get("").toAbsolutePath().toString();
+            assertRegKey("HKLM\\Software\\Classes\\.jnlp",
+                    "", "JNLPFile");
+            assertRegKey("HKLM\\Software\\Classes\\jnlp",
+                    "", "URL:jnlp Protocol");
+            assertRegKey("HKLM\\Software\\Classes\\jnlp",
+                    "URL Protocol", "");
+            assertRegKey("HKLM\\Software\\Classes\\jnlp\\Shell\\Open\\Command",
+                    "", "\"" + scratchDir + "\\jdk\\webstart\\javaws.exe\" \"%1\"");
+            assertRegKey("HKLM\\Software\\Classes\\jnlps",
+                    "", "URL:jnlps Protocol");
+            assertRegKey("HKLM\\Software\\Classes\\jnlps",
+                    "URL Protocol", "");
+            assertRegKey("HKLM\\Software\\Classes\\jnlps\\Shell\\Open\\Command",
+                    "", "\"" + scratchDir + "\\jdk\\webstart\\javaws.exe\" \"%1\"");
+            assertRegKey("HKLM\\Software\\Classes\\JNLPFile",
+                    "", "JNLP File");
+            assertRegKey("HKLM\\Software\\Classes\\JNLPFile",
+                    "EditFlags", "0x10000");
+            //assertRegKey("HKLM\\Software\\Classes\\JNLPFile\\Shell\\Open",
+            //        "", "&amp;Launch with ${openjdk_VENDOR_SHORT} WebStart");
+            assertRegKey("HKLM\\Software\\Classes\\JNLPFile\\Shell\\Open\\Command",
+                    "", "\"" + scratchDir + "\\jdk\\webstart\\javaws.exe\" \"%1\"");
+            assertPath("jdk/webstart");
+            assertNoPath("jdk/jre");
+            assertNoPath("jdk/bin");
+            assertNoPath("jdk/update");
 
-        uninstall();
+        } finally {
+            uninstall();
+        }
     }
 }

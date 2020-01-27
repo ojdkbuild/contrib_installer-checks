@@ -27,11 +27,14 @@ public class AllFeaturesTest {
 
     public static void main(String[] args) throws Exception {
         install("ADDLOCAL=ALL");
+        try {
 
-        assertPath("jdk/bin");
-        assertPath("jdk/jre");
-        assertPath("jdk/webstart");
+            assertPath("jdk/bin");
+            assertPath("jdk/jre");
+            assertPath("jdk/webstart");
 
-        uninstall();
+        } finally {
+            uninstall();
+        }
     }
 }

@@ -27,13 +27,16 @@ public class WebstartPluginTest {
 
     public static void main(String[] args) throws Exception {
         install("ADDLOCAL=webstart_plugin");
+        try {
 
-        assertPath("jdk/jre/lib/plugin.jar");
-        assertPath("jdk/webstart");
-        assertNoPath("jdk/jre/bin");
-        assertNoPath("jdk/bin");
-        assertNoPath("jdk/update");
+            assertPath("jdk/jre/lib/plugin.jar");
+            assertPath("jdk/webstart");
+            assertNoPath("jdk/jre/bin");
+            assertNoPath("jdk/bin");
+            assertNoPath("jdk/update");
 
-        uninstall();
+        } finally {
+            uninstall();
+        }
     }
 }

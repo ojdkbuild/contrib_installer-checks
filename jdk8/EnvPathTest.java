@@ -31,20 +31,23 @@ public class EnvPathTest {
 
     public static void main(String[] args) throws Exception {
         install("ADDLOCAL=jdk_env_path");
+        try {
 
-        String scratchDir = Paths.get("").toAbsolutePath().toString();
-        String pathVar = queryRegistry(REGISTRY_ENV_PATH, "PATH").get();
-        assertThat(pathVar, pathVar.endsWith(scratchDir + "\\jdk\\bin;" + scratchDir + "\\jdk\\jre\\bin"));
-        assertNoRegKey(REGISTRY_ENV_PATH, "JAVA_HOME");
-        assertNoRegKey(REGISTRY_ENV_PATH, "OJDKBUILD_JAVA_HOME");
-        assertNoRegKey(REGISTRY_ENV_PATH, "REDHAT_JAVA_HOME");
-        assertPath("jdk/jre");
-        assertPath("jdk/jre/bin/java.exe");
-        assertNoPath("jdk/bin");
-        assertNoPath("jdk/lib/tools.jar");
-        assertNoPath("jdk/webstart");
-        assertNoPath("jdk/update");
+            String scratchDir = Paths.get("").toAbsolutePath().toString();
+            String pathVar = queryRegistry(REGISTRY_ENV_PATH, "PATH").get();
+            assertThat(pathVar, pathVar.endsWith(scratchDir + "\\jdk\\bin;" + scratchDir + "\\jdk\\jre\\bin"));
+            assertNoRegKey(REGISTRY_ENV_PATH, "JAVA_HOME");
+            assertNoRegKey(REGISTRY_ENV_PATH, "OJDKBUILD_JAVA_HOME");
+            assertNoRegKey(REGISTRY_ENV_PATH, "REDHAT_JAVA_HOME");
+            assertPath("jdk/jre");
+            assertPath("jdk/jre/bin/java.exe");
+            assertNoPath("jdk/bin");
+            assertNoPath("jdk/lib/tools.jar");
+            assertNoPath("jdk/webstart");
+            assertNoPath("jdk/update");
 
-        uninstall();
+        } finally {
+            uninstall();
+        }
     }
 }

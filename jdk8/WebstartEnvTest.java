@@ -31,15 +31,18 @@ public class WebstartEnvTest {
 
     public static void main(String[] args) throws Exception {
         install("ADDLOCAL=webstart_env");
+        try {
 
-        String scratchDir = Paths.get("").toAbsolutePath().toString();
-        String pathVar = queryRegistry(REGISTRY_ENV_PATH, "PATH").get();
-        assertThat(pathVar, pathVar.endsWith(scratchDir + "\\jdk\\webstart\\"));
-        assertPath("jdk/webstart");
-        assertNoPath("jdk/jre");
-        assertNoPath("jdk/bin");
-        assertNoPath("jdk/update");
+            String scratchDir = Paths.get("").toAbsolutePath().toString();
+            String pathVar = queryRegistry(REGISTRY_ENV_PATH, "PATH").get();
+            assertThat(pathVar, pathVar.endsWith(scratchDir + "\\jdk\\webstart\\"));
+            assertPath("jdk/webstart");
+            assertNoPath("jdk/jre");
+            assertNoPath("jdk/bin");
+            assertNoPath("jdk/update");
 
-        uninstall();
+        } finally {
+            uninstall();
+        }
     }
 }

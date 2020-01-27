@@ -29,24 +29,27 @@ public class RegistryStandardTest {
 
     public static void main(String[] args) throws Exception {
         install("ADDLOCAL=jdk_registry_standard");
+        try {
 
-        String scratchDir = Paths.get("").toAbsolutePath().toString();
-        assertRegKey("HKLM\\Software\\JavaSoft\\Java Runtime Environment",
-                "CurrentVersion", "1.8");
-        assertRegKey("HKLM\\Software\\JavaSoft\\Java Runtime Environment\\1.8",
-                "JavaHome", scratchDir + "\\jdk\\jre\\");
-        assertRegKey("HKLM\\Software\\JavaSoft\\Java Runtime Environment\\1.8",
-                "RuntimeLib", scratchDir + "\\jdk\\jre\\bin\\server\\jvm.dll");
-        assertNoRegKey("HKLM\\Software\\JavaSoft\\Java Development Kit", "CurrentVersion");
-        assertNoRegKey("HKLM\\Software\\JavaSoft\\Java Development Kit\\1.8", "JavaHome");
-        assertNoRegKey("HKLM\\Software\\JavaSoft\\Java Development Kit\\1.8", "RuntimeLib");
-        assertPath("jdk/jre");
-        assertPath("jdk/jre/bin/java.exe");
-        assertNoPath("jdk/bin");
-        assertNoPath("jdk/lib/tools.jar");
-        assertNoPath("jdk/webstart");
-        assertNoPath("jdk/update");
+            String scratchDir = Paths.get("").toAbsolutePath().toString();
+            assertRegKey("HKLM\\Software\\JavaSoft\\Java Runtime Environment",
+                    "CurrentVersion", "1.8");
+            assertRegKey("HKLM\\Software\\JavaSoft\\Java Runtime Environment\\1.8",
+                    "JavaHome", scratchDir + "\\jdk\\jre\\");
+            assertRegKey("HKLM\\Software\\JavaSoft\\Java Runtime Environment\\1.8",
+                    "RuntimeLib", scratchDir + "\\jdk\\jre\\bin\\server\\jvm.dll");
+            assertNoRegKey("HKLM\\Software\\JavaSoft\\Java Development Kit", "CurrentVersion");
+            assertNoRegKey("HKLM\\Software\\JavaSoft\\Java Development Kit\\1.8", "JavaHome");
+            assertNoRegKey("HKLM\\Software\\JavaSoft\\Java Development Kit\\1.8", "RuntimeLib");
+            assertPath("jdk/jre");
+            assertPath("jdk/jre/bin/java.exe");
+            assertNoPath("jdk/bin");
+            assertNoPath("jdk/lib/tools.jar");
+            assertNoPath("jdk/webstart");
+            assertNoPath("jdk/update");
 
-        uninstall();
+        } finally {
+            uninstall();
+        }
     }
 }

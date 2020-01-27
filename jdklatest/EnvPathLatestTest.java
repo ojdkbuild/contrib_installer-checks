@@ -31,18 +31,21 @@ public class EnvPathLatestTest {
 
     public static void main(String[] args) throws Exception {
         install("ADDLOCAL=jdk_env_path");
+        try {
 
-        String scratchDir = Paths.get("").toAbsolutePath().toString();
-        String pathVar = queryRegistry(REGISTRY_ENV_PATH, "PATH").get();
-        assertThat(pathVar, pathVar.endsWith(scratchDir + "\\jdk\\bin"));
-        assertNoRegKey(REGISTRY_ENV_PATH, "JAVA_HOME");
-        assertNoRegKey(REGISTRY_ENV_PATH, "OJDKBUILD_JAVA_HOME");
-        assertNoRegKey(REGISTRY_ENV_PATH, "REDHAT_JAVA_HOME");
-        assertPath("jdk/bin/java.exe");
-        assertPath("jdk/bin/server/jvm.dll");
-        assertPath("jdk/lib/modules");
-        assertNoPath("jdk/missioncontrol");
+            String scratchDir = Paths.get("").toAbsolutePath().toString();
+            String pathVar = queryRegistry(REGISTRY_ENV_PATH, "PATH").get();
+            assertThat(pathVar, pathVar.endsWith(scratchDir + "\\jdk\\bin"));
+            assertNoRegKey(REGISTRY_ENV_PATH, "JAVA_HOME");
+            assertNoRegKey(REGISTRY_ENV_PATH, "OJDKBUILD_JAVA_HOME");
+            assertNoRegKey(REGISTRY_ENV_PATH, "REDHAT_JAVA_HOME");
+            assertPath("jdk/bin/java.exe");
+            assertPath("jdk/bin/server/jvm.dll");
+            assertPath("jdk/lib/modules");
+            assertNoPath("jdk/missioncontrol");
 
-        uninstall();
+        } finally {
+            uninstall();
+        }
     }
 }

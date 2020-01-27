@@ -29,25 +29,28 @@ public class RegistryJarLatestTest {
 
     public static void main(String[] args) throws Exception {
         install("ADDLOCAL=jdk_registry_jar");
+        try {
 
-        String scratchDir = Paths.get("").toAbsolutePath().toString();
-        assertRegKey("HKLM\\Software\\Classes\\.jar",
-                "", "JARFile");
-        assertRegKey("HKLM\\Software\\Classes\\.jar",
-                "Content Type", "application/java-archive");
-        assertRegKey("HKLM\\Software\\Classes\\JARFile",
-                "", "JAR File");
-        assertRegKey("HKLM\\Software\\Classes\\JARFile",
-                "EditFlags", "0x10000");
-        //assertRegKey("HKLM\\Software\\Classes\\JARFile\\Shell\\Open",
-        //        "", "&amp;Launch with ${${PROJECT_NAME}_VENDOR_SHORT} OpenJDK");
-        assertRegKey("HKLM\\Software\\Classes\\JARFile\\Shell\\Open\\Command",
-                "", "\"" + scratchDir + "\\jdk\\bin\\javaw.exe\" -jar \"%1\" %*");
-        assertPath("jdk/bin/java.exe");
-        assertPath("jdk/bin/server/jvm.dll");
-        assertPath("jdk/lib/modules");
-        assertNoPath("jdk/missioncontrol");
+            String scratchDir = Paths.get("").toAbsolutePath().toString();
+            assertRegKey("HKLM\\Software\\Classes\\.jar",
+                    "", "JARFile");
+            assertRegKey("HKLM\\Software\\Classes\\.jar",
+                    "Content Type", "application/java-archive");
+            assertRegKey("HKLM\\Software\\Classes\\JARFile",
+                    "", "JAR File");
+            assertRegKey("HKLM\\Software\\Classes\\JARFile",
+                    "EditFlags", "0x10000");
+            //assertRegKey("HKLM\\Software\\Classes\\JARFile\\Shell\\Open",
+            //        "", "&amp;Launch with ${${PROJECT_NAME}_VENDOR_SHORT} OpenJDK");
+            assertRegKey("HKLM\\Software\\Classes\\JARFile\\Shell\\Open\\Command",
+                    "", "\"" + scratchDir + "\\jdk\\bin\\javaw.exe\" -jar \"%1\" %*");
+            assertPath("jdk/bin/java.exe");
+            assertPath("jdk/bin/server/jvm.dll");
+            assertPath("jdk/lib/modules");
+            assertNoPath("jdk/missioncontrol");
 
-        uninstall();
+        } finally {
+            uninstall();
+        }
     }
 }
