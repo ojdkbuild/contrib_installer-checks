@@ -36,7 +36,7 @@ public class WebstartEnvTest {
             String scratchDir = Paths.get("").toAbsolutePath().toString();
             String pathVar = queryRegistry(REGISTRY_ENV_PATH, "PATH").get();
             assertThat(pathVar, pathVar.endsWith(scratchDir + "\\jdk\\webstart\\"));
-            assertPath("jdk/webstart");
+            assertPath("jdk/webstart/javaws.exe");
             assertNoPath("jdk/jre");
             assertNoPath("jdk/bin");
             assertNoPath("jdk/update");

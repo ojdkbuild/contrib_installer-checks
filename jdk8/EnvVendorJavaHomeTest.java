@@ -48,8 +48,8 @@ public class EnvVendorJavaHomeTest {
             String pathVar = queryRegistry(REGISTRY_ENV_PATH, "PATH").get();
             assertFalse(pathVar, pathVar.endsWith(scratchDir + "\\jdk\\bin;" + scratchDir + "\\jdk\\jre\\bin"));
             assertNoRegKey(REGISTRY_ENV_PATH, "JAVA_HOME");
-            assertPath("jdk/jre");
             assertPath("jdk/jre/bin/java.exe");
+            assertPath("jdk/jre/bin/server/jvm.dll");
             assertNoPath("jdk/bin");
             assertNoPath("jdk/lib/tools.jar");
             assertNoPath("jdk/webstart");

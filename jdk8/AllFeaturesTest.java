@@ -29,9 +29,10 @@ public class AllFeaturesTest {
         install("ADDLOCAL=ALL");
         try {
 
-            assertPath("jdk/bin");
-            assertPath("jdk/jre");
-            assertPath("jdk/webstart");
+            assertPath("jdk/bin/java.exe");
+            assertPath("jdk/jre/bin/java.exe");
+            assertPath("jdk/jre/bin/server/jvm.dll");
+            assertPath("jdk/webstart/javaws.exe");
 
         } finally {
             uninstall();

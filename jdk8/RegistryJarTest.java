@@ -44,8 +44,8 @@ public class RegistryJarTest {
             //        "", "&amp;Launch with ${${PROJECT_NAME}_VENDOR_SHORT} OpenJDK");
             assertRegKey("HKLM\\Software\\Classes\\JARFile\\Shell\\Open\\Command",
                     "", "\"" + scratchDir + "\\jdk\\jre\\bin\\javaw.exe\" -jar \"%1\" %*");
-            assertPath("jdk/jre");
             assertPath("jdk/jre/bin/java.exe");
+            assertPath("jdk/jre/bin/server/jvm.dll");
             assertNoPath("jdk/bin");
             assertNoPath("jdk/lib/tools.jar");
             assertNoPath("jdk/webstart");

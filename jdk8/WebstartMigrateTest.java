@@ -29,9 +29,7 @@ public class WebstartMigrateTest {
         install("ADDLOCAL=webstart_migrate");
         try {
 
-        // todo: find out the way to actually test migrate logic
-
-            assertPath("jdk/webstart");
+            assertPath("jdk/webstart/javaws.exe");
             assertNoPath("jdk/jre");
             assertNoPath("jdk/bin");
             assertNoPath("jdk/update");

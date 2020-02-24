@@ -30,8 +30,8 @@ public class JreOnlyTest {
         install("ADDLOCAL=jdk");
         try {
 
-            assertPath("jdk/jre");
             assertPath("jdk/jre/bin/java.exe");
+            assertPath("jdk/jre/bin/server/jvm.dll");
             assertNoPath("jdk/bin");
             assertNoPath("jdk/lib/tools.jar");
             assertNoPath("jdk/webstart");

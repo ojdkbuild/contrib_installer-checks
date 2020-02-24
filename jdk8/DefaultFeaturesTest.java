@@ -30,8 +30,9 @@ public class DefaultFeaturesTest {
         install();
         try {
 
-            assertPath("jdk/bin");
-            assertPath("jdk/jre");
+            assertPath("jdk/bin/java.exe");
+            assertPath("jdk/jre/bin/java.exe");
+            assertPath("jdk/jre/bin/server/jvm.dll");
             assertNoPath("jdk/webstart");
             assertNoPath("jdk/update");
 

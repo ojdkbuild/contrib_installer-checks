@@ -14,7 +14,10 @@
  * limitations under the License.
  */
 
-import static support.Assert.*;
+import static java.util.Collections.emptyList;
+import static support.Assert.assertNoPath;
+import static support.Assert.assertPath;
+import static support.Install.TESTJDK_PREV_MSI_PATH;
 import static support.Install.install;
 import static support.Uninstall.uninstall;
 
@@ -23,18 +26,17 @@ import static support.Uninstall.uninstall;
  * @library ..
  */
 
-public class WebstartTest {
+public class UpdateDefaultFeaturesTest {
 
     public static void main(String[] args) throws Exception {
-        install("ADDLOCAL=webstart");
+        install(System.getenv(TESTJDK_PREV_MSI_PATH), emptyList());
+        install();
         try {
 
-            assertPath("jdk/webstart/javaws.exe");
-            assertPath("jdk/webstart/javaws.jar");
-            assertPath("jdk/webstart/javaws_options.txt");
-            assertPath("jdk/webstart/javaws_splash.png");
-            assertNoPath("jdk/jre");
-            assertNoPath("jdk/bin");
+            assertPath("jdk/bin/java.exe");
+            assertPath("jdk/jre/bin/java.exe");
+            assertPath("jdk/jre/bin/server/jvm.dll");
+            assertNoPath("jdk/webstart");
             assertNoPath("jdk/update");
 
         } finally {

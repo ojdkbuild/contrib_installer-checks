@@ -54,7 +54,7 @@ public class WebstartRegistryTest {
             //        "", "&amp;Launch with ${openjdk_VENDOR_SHORT} WebStart");
             assertRegKey("HKLM\\Software\\Classes\\JNLPFile\\Shell\\Open\\Command",
                     "", "\"" + scratchDir + "\\jdk\\webstart\\javaws.exe\" \"%1\"");
-            assertPath("jdk/webstart");
+            assertPath("jdk/webstart/javaws.exe");
             assertNoPath("jdk/jre");
             assertNoPath("jdk/bin");
             assertNoPath("jdk/update");

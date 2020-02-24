@@ -1,5 +1,5 @@
 /*
- * Copyright 2020, akashche at redhat.com
+ * Copyright 2019, akashche at redhat.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
-import static support.Assert.*;
+import static java.util.Collections.singletonList;
+import static support.Assert.assertPath;
+import static support.Install.TESTJDK_PREV_MSI_PATH;
 import static support.Install.install;
 import static support.Uninstall.uninstall;
 
@@ -23,19 +25,17 @@ import static support.Uninstall.uninstall;
  * @library ..
  */
 
-public class WebstartTest {
+public class UpdateAllFeaturesTest {
 
     public static void main(String[] args) throws Exception {
-        install("ADDLOCAL=webstart");
+        install(System.getenv(TESTJDK_PREV_MSI_PATH), singletonList("ADDLOCAL=ALL"));
+        install();
         try {
 
+            assertPath("jdk/bin/java.exe");
+            assertPath("jdk/jre/bin/java.exe");
+            assertPath("jdk/jre/bin/server/jvm.dll");
             assertPath("jdk/webstart/javaws.exe");
-            assertPath("jdk/webstart/javaws.jar");
-            assertPath("jdk/webstart/javaws_options.txt");
-            assertPath("jdk/webstart/javaws_splash.png");
-            assertNoPath("jdk/jre");
-            assertNoPath("jdk/bin");
-            assertNoPath("jdk/update");
 
         } finally {
             uninstall();

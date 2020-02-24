@@ -30,9 +30,9 @@ public class DevelTest {
         install("ADDLOCAL=jdk_devel");
         try {
 
-            assertPath("jdk/jre");
-            assertPath("jdk/jre/bin/java.exe");
             assertPath("jdk/bin/java.exe");
+            assertPath("jdk/jre/bin/java.exe");
+            assertPath("jdk/jre/bin/server/jvm.dll");
             assertPath("jdk/lib/tools.jar");
             assertNoPath("jdk/webstart");
             assertNoPath("jdk/update");
