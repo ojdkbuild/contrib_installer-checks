@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-import static java.util.Collections.emptyList;
+import java.util.Collections;
+
 import static support.Assert.assertNoPath;
 import static support.Assert.assertPath;
 import static support.Install.TESTJDK_PREV_MSI_PATH;
@@ -29,7 +30,7 @@ import static support.Uninstall.uninstall;
 public class UpdateDefaultFeaturesTest {
 
     public static void main(String[] args) throws Exception {
-        install(System.getenv(TESTJDK_PREV_MSI_PATH), emptyList());
+        install(System.getenv(TESTJDK_PREV_MSI_PATH), Collections.<String>emptyList());
         install();
         try {
 

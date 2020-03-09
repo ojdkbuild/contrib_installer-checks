@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
+import support.Optional;
+
 import java.nio.file.Paths;
-import java.util.Optional;
 
 import static support.Assert.*;
 import static support.Install.install;

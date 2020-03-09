@@ -18,7 +18,6 @@ package support;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Optional;
 
 import static support.Registry.queryRegistry;
 

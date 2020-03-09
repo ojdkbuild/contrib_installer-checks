@@ -22,7 +22,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static support.Format.formatCommandLine;
@@ -60,8 +59,13 @@ public class Registry {
             throw new Exception("Reg query failure, code: [" + code + "]");
         }
 
-        List<String> lines = Files.readAllLines(output, UTF_8);
-        lines.removeIf(String::isEmpty);
+        List<String> linesAll = Files.readAllLines(output, UTF_8);
+        List<String> lines = new ArrayList<String>();
+        for (String li : linesAll) {
+            if (!li.isEmpty()) {
+                lines.add(li);
+            }
+        }
         if (2 != lines.size()) {
             throw new Exception("Reg query invalid output, entries: [" + lines + "]");
         }
