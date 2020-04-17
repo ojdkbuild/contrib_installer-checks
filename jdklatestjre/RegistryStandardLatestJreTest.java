@@ -35,9 +35,9 @@ public class RegistryStandardLatestJreTest {
             // todo: checks with minor version
 
             String scratchDir = Paths.get("").toAbsolutePath().toString();
-            assertRegKey("HKLM\\Software\\JavaSoft\\JDK\\13.0",
+            assertRegKey("HKLM\\Software\\JavaSoft\\JDK\\14.0",
                     "JavaHome", scratchDir + "\\jdk\\");
-            assertRegKey("HKLM\\Software\\JavaSoft\\JDK\\13.0",
+            assertRegKey("HKLM\\Software\\JavaSoft\\JDK\\14.0",
                     "RuntimeLib", scratchDir + "\\jdk\\bin\\server\\jvm.dll");
             assertPath("jdk/bin/java.exe");
             assertPath("jdk/bin/server/jvm.dll");
