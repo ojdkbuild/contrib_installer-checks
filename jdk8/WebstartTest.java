@@ -35,6 +35,8 @@ public class WebstartTest {
             assertPath("jdk/webstart/javaws_splash.png");
             assertNoPath("jdk/jre");
             assertNoPath("jdk/bin");
+            assertNoPath("jdk/lib/tools.jar");
+            assertNoPath("jdk/missioncontrol");
             assertNoPath("jdk/update");
 
         } finally {

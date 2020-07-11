@@ -39,6 +39,8 @@ public class WebstartEnvTest {
             assertPath("jdk/webstart/javaws.exe");
             assertNoPath("jdk/jre");
             assertNoPath("jdk/bin");
+            assertNoPath("jdk/lib/tools.jar");
+            assertNoPath("jdk/missioncontrol");
             assertNoPath("jdk/update");
 
         } finally {

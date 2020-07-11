@@ -33,6 +33,8 @@ public class WebstartPluginTest {
             assertPath("jdk/webstart/javaws.exe");
             assertNoPath("jdk/jre/bin");
             assertNoPath("jdk/bin");
+            assertNoPath("jdk/lib/tools.jar");
+            assertNoPath("jdk/missioncontrol");
             assertNoPath("jdk/update");
 
         } finally {

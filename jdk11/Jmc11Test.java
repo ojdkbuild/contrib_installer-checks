@@ -30,8 +30,6 @@ public class Jmc11Test {
         install("ADDLOCAL=jmc");
         try {
 
-            // todo: custom actions
-
             assertPath("jdk/missioncontrol");
             assertPath("jdk/missioncontrol/jmc.exe");
             assertPath("jdk/missioncontrol/install/local_cleaner.exe");

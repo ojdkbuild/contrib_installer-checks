@@ -33,6 +33,7 @@ public class DefaultFeaturesTest {
             assertPath("jdk/bin/java.exe");
             assertPath("jdk/jre/bin/java.exe");
             assertPath("jdk/jre/bin/server/jvm.dll");
+            assertNoPath("jdk/missioncontrol");
             assertNoPath("jdk/webstart");
             assertNoPath("jdk/update");
 

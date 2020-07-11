@@ -34,6 +34,7 @@ public class JreOnlyTest {
             assertPath("jdk/jre/bin/server/jvm.dll");
             assertNoPath("jdk/bin");
             assertNoPath("jdk/lib/tools.jar");
+            assertNoPath("jdk/missioncontrol");
             assertNoPath("jdk/webstart");
             assertNoPath("jdk/update");
 

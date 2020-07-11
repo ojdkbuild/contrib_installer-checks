@@ -1,5 +1,5 @@
 /*
- * Copyright 2019, akashche at redhat.com
+ * Copyright 2020, akashche at redhat.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,8 +14,12 @@
  * limitations under the License.
  */
 
-import static support.Assert.assertPath;
+import java.nio.file.Paths;
+
+import static support.Assert.*;
 import static support.Install.install;
+import static support.Registry.REGISTRY_ENV_PATH;
+import static support.Registry.queryRegistry;
 import static support.Uninstall.uninstall;
 
 /**
@@ -23,17 +27,23 @@ import static support.Uninstall.uninstall;
  * @library ..
  */
 
-public class AllFeaturesTest {
+public class JmcEnv8Test {
 
     public static void main(String[] args) throws Exception {
-        install("ADDLOCAL=ALL");
+        install("ADDLOCAL=jmc_env");
         try {
 
-            assertPath("jdk/bin/java.exe");
-            assertPath("jdk/jre/bin/java.exe");
-            assertPath("jdk/jre/bin/server/jvm.dll");
+            String scratchDir = Paths.get("").toAbsolutePath().toString();
+            String pathVar = queryRegistry(REGISTRY_ENV_PATH, "PATH").get();
+            assertThat(pathVar, pathVar.endsWith(scratchDir + "\\jdk\\missioncontrol\\"));
+            assertNoRegKey(REGISTRY_ENV_PATH, "JAVA_HOME");
+            assertNoRegKey(REGISTRY_ENV_PATH, "OJDKBUILD_JAVA_HOME");
+            assertNoRegKey(REGISTRY_ENV_PATH, "REDHAT_JAVA_HOME");
             assertPath("jdk/missioncontrol");
-            assertPath("jdk/webstart/javaws.exe");
+            assertNoPath("jdk/bin");
+            assertNoPath("jdk/lib/tools.jar");
+            assertNoPath("jdk/webstart");
+            assertNoPath("jdk/update");
 
         } finally {
             uninstall();

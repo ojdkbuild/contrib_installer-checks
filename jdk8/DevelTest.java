@@ -34,6 +34,7 @@ public class DevelTest {
             assertPath("jdk/jre/bin/java.exe");
             assertPath("jdk/jre/bin/server/jvm.dll");
             assertPath("jdk/lib/tools.jar");
+            assertNoPath("jdk/missioncontrol");
             assertNoPath("jdk/webstart");
             assertNoPath("jdk/update");
 

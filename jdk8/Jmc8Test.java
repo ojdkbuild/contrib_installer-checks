@@ -1,5 +1,5 @@
 /*
- * Copyright 2019, akashche at redhat.com
+ * Copyright 2020, akashche at redhat.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import static support.Assert.assertNoPath;
 import static support.Assert.assertPath;
 import static support.Install.install;
 import static support.Uninstall.uninstall;
@@ -23,17 +24,21 @@ import static support.Uninstall.uninstall;
  * @library ..
  */
 
-public class AllFeaturesTest {
+public class Jmc8Test {
 
     public static void main(String[] args) throws Exception {
-        install("ADDLOCAL=ALL");
+        install("ADDLOCAL=jmc");
         try {
 
-            assertPath("jdk/bin/java.exe");
-            assertPath("jdk/jre/bin/java.exe");
-            assertPath("jdk/jre/bin/server/jvm.dll");
+            // todo: custom actions
+
             assertPath("jdk/missioncontrol");
-            assertPath("jdk/webstart/javaws.exe");
+            assertPath("jdk/missioncontrol/jmc.exe");
+            assertPath("jdk/missioncontrol/install/local_cleaner.exe");
+            assertNoPath("jdk/bin");
+            assertNoPath("jdk/lib/tools.jar");
+            assertNoPath("jdk/webstart");
+            assertNoPath("jdk/update");
 
         } finally {
             uninstall();
