@@ -67,17 +67,14 @@ public class JmcCleanup11Test {
             assertPath(appDataDir.toString() + "/missioncontrol");
             assertPath(appDataDir.toString() + "/missioncontrol/.metadata");
 
-            // uninstall
-            uninstall();
-
-            // check cleanup performed
-            assertNoPath(appDataDir.toString() + "/missioncontrol");
-            assertNoPath(appDataDir.toString());
-            assertNoPath("jdk/missioncontrol");
-            assertNoPath("jdk");
-
-        } catch (Exception e) {
+        } finally {
             uninstall();
         }
+
+        // check cleanup performed
+        assertNoPath(appDataDir.toString() + "/missioncontrol");
+        assertNoPath(appDataDir.toString());
+        assertNoPath("jdk/missioncontrol");
+        assertNoPath("jdk");
     }
 }

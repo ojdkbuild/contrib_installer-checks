@@ -58,25 +58,24 @@ public class JmcCleanup8Test {
                     break;
                 }
             }
-            proc.destroyForcibly().waitFor();
-            assertThat("Mission Control process killed", !proc.isAlive());
+            proc.destroy();
+            proc.waitFor();
+            assertThat("Mission Control process killed", proc.exitValue() >= Integer.MIN_VALUE);
 
             // check dirs created
             assertPath(appDataDir.toString());
             assertPath(appDataDir.toString() + "/missioncontrol");
             assertPath(appDataDir.toString() + "/missioncontrol/.metadata");
 
-            // uninstall
-            uninstall();
-
-            // check cleanup performed
-            assertNoPath(appDataDir.toString() + "/missioncontrol");
-            assertNoPath(appDataDir.toString());
-            assertNoPath("jdk/missioncontrol");
-            assertNoPath("jdk");
-
-        } catch (Exception e) {
+        } finally {
             uninstall();
         }
+
+        // check cleanup performed
+        assertNoPath(appDataDir.toString() + "/missioncontrol");
+        assertNoPath(appDataDir.toString());
+        assertNoPath("jdk/missioncontrol");
+        assertNoPath("jdk");
+
     }
 }
