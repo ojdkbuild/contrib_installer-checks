@@ -27,16 +27,16 @@ import static support.Uninstall.uninstall;
  * @library ..
  */
 
-public class EnvPathLatestTest {
+public class EnvJavaHome17Test {
 
     public static void main(String[] args) throws Exception {
-        install("ADDLOCAL=jdk_env_path");
+        install("ADDLOCAL=jdk_env_java_home");
         try {
 
             String scratchDir = Paths.get("").toAbsolutePath().toString();
+            assertRegKey(REGISTRY_ENV_PATH,"JAVA_HOME", scratchDir + "\\jdk\\");
             String pathVar = queryRegistry(REGISTRY_ENV_PATH, "PATH").get();
-            assertThat(pathVar, pathVar.endsWith(scratchDir + "\\jdk\\bin"));
-            assertNoRegKey(REGISTRY_ENV_PATH, "JAVA_HOME");
+            assertFalse(pathVar, pathVar.endsWith(scratchDir + "\\jdk\\bin"));
             assertNoRegKey(REGISTRY_ENV_PATH, "OJDKBUILD_JAVA_HOME");
             assertNoRegKey(REGISTRY_ENV_PATH, "REDHAT_JAVA_HOME");
             assertPath("jdk/bin/java.exe");

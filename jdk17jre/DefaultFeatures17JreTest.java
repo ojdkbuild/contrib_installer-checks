@@ -14,12 +14,8 @@
  * limitations under the License.
  */
 
-import java.nio.file.Paths;
-
-import static support.Assert.*;
+import static support.Assert.assertPath;
 import static support.Install.install;
-import static support.Registry.REGISTRY_ENV_PATH;
-import static support.Registry.queryRegistry;
 import static support.Uninstall.uninstall;
 
 /**
@@ -27,22 +23,19 @@ import static support.Uninstall.uninstall;
  * @library ..
  */
 
-public class EnvJavaHomeLatestTest {
+public class DefaultFeatures17JreTest {
 
     public static void main(String[] args) throws Exception {
-        install("ADDLOCAL=jdk_env_java_home");
+        install();
         try {
 
-            String scratchDir = Paths.get("").toAbsolutePath().toString();
-            assertRegKey(REGISTRY_ENV_PATH,"JAVA_HOME", scratchDir + "\\jdk\\");
-            String pathVar = queryRegistry(REGISTRY_ENV_PATH, "PATH").get();
-            assertFalse(pathVar, pathVar.endsWith(scratchDir + "\\jdk\\bin"));
-            assertNoRegKey(REGISTRY_ENV_PATH, "OJDKBUILD_JAVA_HOME");
-            assertNoRegKey(REGISTRY_ENV_PATH, "REDHAT_JAVA_HOME");
+            assertPath("jdk/bin");
             assertPath("jdk/bin/java.exe");
             assertPath("jdk/bin/server/jvm.dll");
             assertPath("jdk/lib/modules");
-            assertNoPath("jdk/missioncontrol");
+            assertPath("jdk/conf");
+            assertPath("jdk/legal");
+            assertPath("jdk/lib");
 
         } finally {
             uninstall();

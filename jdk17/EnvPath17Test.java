@@ -14,9 +14,12 @@
  * limitations under the License.
  */
 
-import static support.Assert.assertNoPath;
-import static support.Assert.assertPath;
+import java.nio.file.Paths;
+
+import static support.Assert.*;
 import static support.Install.install;
+import static support.Registry.REGISTRY_ENV_PATH;
+import static support.Registry.queryRegistry;
 import static support.Uninstall.uninstall;
 
 /**
@@ -24,21 +27,21 @@ import static support.Uninstall.uninstall;
  * @library ..
  */
 
-public class DefaultFeaturesLatestTest {
+public class EnvPath17Test {
 
     public static void main(String[] args) throws Exception {
-        install("");
+        install("ADDLOCAL=jdk_env_path");
         try {
 
-            assertPath("jdk/bin");
+            String scratchDir = Paths.get("").toAbsolutePath().toString();
+            String pathVar = queryRegistry(REGISTRY_ENV_PATH, "PATH").get();
+            assertThat(pathVar, pathVar.endsWith(scratchDir + "\\jdk\\bin"));
+            assertNoRegKey(REGISTRY_ENV_PATH, "JAVA_HOME");
+            assertNoRegKey(REGISTRY_ENV_PATH, "OJDKBUILD_JAVA_HOME");
+            assertNoRegKey(REGISTRY_ENV_PATH, "REDHAT_JAVA_HOME");
             assertPath("jdk/bin/java.exe");
             assertPath("jdk/bin/server/jvm.dll");
             assertPath("jdk/lib/modules");
-            assertPath("jdk/conf");
-            assertPath("jdk/include");
-            assertPath("jdk/jmods");
-            assertPath("jdk/legal");
-            assertPath("jdk/lib");
             assertNoPath("jdk/missioncontrol");
 
         } finally {

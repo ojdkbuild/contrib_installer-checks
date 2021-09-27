@@ -30,7 +30,7 @@ import static support.Uninstall.uninstall;
  * @library ..
  */
 
-public class JmcCleanupLatestTest {
+public class JmcCleanup17Test {
 
     public static void main(String[] args) throws Exception {
         Path scratchDir = Paths.get("").toAbsolutePath();

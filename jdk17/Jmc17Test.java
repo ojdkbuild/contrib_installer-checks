@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-import java.nio.file.Paths;
-
-import static support.Assert.*;
+import static support.Assert.assertNoPath;
+import static support.Assert.assertPath;
 import static support.Install.install;
 import static support.Uninstall.uninstall;
 
@@ -25,23 +24,23 @@ import static support.Uninstall.uninstall;
  * @library ..
  */
 
-public class RegistryStandardLatestTest {
+public class Jmc17Test {
 
     public static void main(String[] args) throws Exception {
-        install("ADDLOCAL=jdk_registry_standard");
+        install("ADDLOCAL=jmc");
         try {
 
-            // todo: checks with version
+            // todo: custom actions
 
-            String scratchDir = Paths.get("").toAbsolutePath().toString();
-            //assertRegKey("HKLM\\Software\\JavaSoft\\JDK\\11.0",
-            //        "JavaHome", scratchDir + "\\jdk\\");
-            //assertRegKey("HKLM\\Software\\JavaSoft\\JDK\\11.0",
-            //        "RuntimeLib", scratchDir + "\\jdk\\bin\\server\\jvm.dll");
-            assertPath("jdk/bin/java.exe");
-            assertPath("jdk/bin/server/jvm.dll");
-            assertPath("jdk/lib/modules");
-            assertNoPath("jdk/missioncontrol");
+            assertPath("jdk/missioncontrol");
+            assertPath("jdk/missioncontrol/jmc.exe");
+            assertPath("jdk/missioncontrol/install/local_cleaner.exe");
+            assertNoPath("jdk/bin");
+            assertNoPath("jdk/conf");
+            assertNoPath("jdk/include");
+            assertNoPath("jdk/jmods");
+            assertNoPath("jdk/legal");
+            assertNoPath("jdk/lib");
 
         } finally {
             uninstall();

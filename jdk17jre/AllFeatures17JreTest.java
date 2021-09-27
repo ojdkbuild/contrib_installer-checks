@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import static support.Assert.assertNoPath;
 import static support.Assert.assertPath;
 import static support.Install.install;
 import static support.Uninstall.uninstall;
@@ -23,10 +24,10 @@ import static support.Uninstall.uninstall;
  * @library ..
  */
 
-public class DefaultFeaturesLatestJreTest {
+public class AllFeatures17JreTest {
 
     public static void main(String[] args) throws Exception {
-        install("");
+        install("ADDLOCAL=ALL");
         try {
 
             assertPath("jdk/bin");
@@ -36,6 +37,10 @@ public class DefaultFeaturesLatestJreTest {
             assertPath("jdk/conf");
             assertPath("jdk/legal");
             assertPath("jdk/lib");
+
+            assertNoPath("jdk/include");
+            assertNoPath("jdk/jmods");
+            assertNoPath("jdk/missioncontrol");
 
         } finally {
             uninstall();

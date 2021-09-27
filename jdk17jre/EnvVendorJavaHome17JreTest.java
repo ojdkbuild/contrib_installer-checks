@@ -14,10 +14,14 @@
  * limitations under the License.
  */
 
+import support.Optional;
+
 import java.nio.file.Paths;
 
 import static support.Assert.*;
 import static support.Install.install;
+import static support.Registry.REGISTRY_ENV_PATH;
+import static support.Registry.queryRegistry;
 import static support.Uninstall.uninstall;
 
 /**
@@ -25,29 +29,29 @@ import static support.Uninstall.uninstall;
  * @library ..
  */
 
-public class RegistryJarLatestTest {
+public class EnvVendorJavaHome17JreTest {
 
     public static void main(String[] args) throws Exception {
-        install("ADDLOCAL=jdk_registry_jar");
+        install("ADDLOCAL=jre_env_vendor_java_home");
         try {
 
             String scratchDir = Paths.get("").toAbsolutePath().toString();
-            assertRegKey("HKLM\\Software\\Classes\\.jar",
-                    "", "JARFile");
-            assertRegKey("HKLM\\Software\\Classes\\.jar",
-                    "Content Type", "application/java-archive");
-            assertRegKey("HKLM\\Software\\Classes\\JARFile",
-                    "", "JAR File");
-            assertRegKey("HKLM\\Software\\Classes\\JARFile",
-                    "EditFlags", "0x10000");
-            //assertRegKey("HKLM\\Software\\Classes\\JARFile\\Shell\\Open",
-            //        "", "&amp;Launch with ${${PROJECT_NAME}_VENDOR_SHORT} OpenJDK");
-            assertRegKey("HKLM\\Software\\Classes\\JARFile\\Shell\\Open\\Command",
-                    "", "\"" + scratchDir + "\\jdk\\bin\\javaw.exe\" -jar \"%1\" %*");
+            Optional<String> ojdkbuild = queryRegistry(REGISTRY_ENV_PATH, "OJDKBUILD_JAVA_HOME");
+            Optional<String> redhat = queryRegistry(REGISTRY_ENV_PATH, "REDHAT_JAVA_HOME");
+            String vendor = "";
+            if (ojdkbuild.isPresent()) {
+                vendor = ojdkbuild.get();
+            } else if (redhat.isPresent()) {
+                vendor = redhat.get();
+            }
+            assertFalse("vendor", vendor.isEmpty());
+            assertEquals("vendor", scratchDir + "\\jdk\\", vendor);
+            String pathVar = queryRegistry(REGISTRY_ENV_PATH, "PATH").get();
+            assertFalse(pathVar, pathVar.endsWith(scratchDir + "\\jdk\\bin"));
+            assertNoRegKey(REGISTRY_ENV_PATH, "JAVA_HOME");
             assertPath("jdk/bin/java.exe");
             assertPath("jdk/bin/server/jvm.dll");
             assertPath("jdk/lib/modules");
-            assertNoPath("jdk/missioncontrol");
 
         } finally {
             uninstall();

@@ -14,10 +14,8 @@
  * limitations under the License.
  */
 
-import java.nio.file.Paths;
-
+import static support.Assert.assertNoPath;
 import static support.Assert.assertPath;
-import static support.Assert.assertRegKey;
 import static support.Install.install;
 import static support.Uninstall.uninstall;
 
@@ -26,22 +24,22 @@ import static support.Uninstall.uninstall;
  * @library ..
  */
 
-public class RegistryStandardLatestJreTest {
+public class DefaultFeatures17Test {
 
     public static void main(String[] args) throws Exception {
-        install("ADDLOCAL=jdk_registry_standard");
+        install();
         try {
 
-            // todo: checks with minor version
-
-            String scratchDir = Paths.get("").toAbsolutePath().toString();
-            assertRegKey("HKLM\\Software\\JavaSoft\\JDK\\15.0",
-                    "JavaHome", scratchDir + "\\jdk\\");
-            assertRegKey("HKLM\\Software\\JavaSoft\\JDK\\15.0",
-                    "RuntimeLib", scratchDir + "\\jdk\\bin\\server\\jvm.dll");
+            assertPath("jdk/bin");
             assertPath("jdk/bin/java.exe");
             assertPath("jdk/bin/server/jvm.dll");
             assertPath("jdk/lib/modules");
+            assertPath("jdk/conf");
+            assertPath("jdk/include");
+            assertPath("jdk/jmods");
+            assertPath("jdk/legal");
+            assertPath("jdk/lib");
+            assertNoPath("jdk/missioncontrol");
 
         } finally {
             uninstall();

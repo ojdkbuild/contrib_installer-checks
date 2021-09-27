@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-import support.Optional;
-
 import java.nio.file.Paths;
 
 import static support.Assert.*;
@@ -29,26 +27,18 @@ import static support.Uninstall.uninstall;
  * @library ..
  */
 
-public class EnvVendorJavaHomeLatestJreTest {
+public class EnvJavaHome17JreTest {
 
     public static void main(String[] args) throws Exception {
-        install("ADDLOCAL=jdk_env_vendor_java_home");
+        install("ADDLOCAL=jre_env_java_home");
         try {
 
             String scratchDir = Paths.get("").toAbsolutePath().toString();
-            Optional<String> ojdkbuild = queryRegistry(REGISTRY_ENV_PATH, "OJDKBUILD_JAVA_HOME");
-            Optional<String> redhat = queryRegistry(REGISTRY_ENV_PATH, "REDHAT_JAVA_HOME");
-            String vendor = "";
-            if (ojdkbuild.isPresent()) {
-                vendor = ojdkbuild.get();
-            } else if (redhat.isPresent()) {
-                vendor = redhat.get();
-            }
-            assertFalse("vendor", vendor.isEmpty());
-            assertEquals("vendor", scratchDir + "\\jdk\\", vendor);
+            assertRegKey(REGISTRY_ENV_PATH, "JAVA_HOME", scratchDir + "\\jdk\\");
             String pathVar = queryRegistry(REGISTRY_ENV_PATH, "PATH").get();
             assertFalse(pathVar, pathVar.endsWith(scratchDir + "\\jdk\\bin"));
-            assertNoRegKey(REGISTRY_ENV_PATH, "JAVA_HOME");
+            assertNoRegKey(REGISTRY_ENV_PATH, "OJDKBUILD_JAVA_HOME");
+            assertNoRegKey(REGISTRY_ENV_PATH, "REDHAT_JAVA_HOME");
             assertPath("jdk/bin/java.exe");
             assertPath("jdk/bin/server/jvm.dll");
             assertPath("jdk/lib/modules");

@@ -14,12 +14,8 @@
  * limitations under the License.
  */
 
-import java.nio.file.Paths;
-
-import static support.Assert.*;
+import static support.Assert.assertPath;
 import static support.Install.install;
-import static support.Registry.REGISTRY_ENV_PATH;
-import static support.Registry.queryRegistry;
 import static support.Uninstall.uninstall;
 
 /**
@@ -27,20 +23,22 @@ import static support.Uninstall.uninstall;
  * @library ..
  */
 
-public class JmcEnvLatestTest {
+public class AllFeatures17Test {
 
     public static void main(String[] args) throws Exception {
-        install("ADDLOCAL=jmc_env");
+        install("ADDLOCAL=ALL");
         try {
 
-            String scratchDir = Paths.get("").toAbsolutePath().toString();
-            String pathVar = queryRegistry(REGISTRY_ENV_PATH, "PATH").get();
-            assertThat(pathVar, pathVar.endsWith(scratchDir + "\\jdk\\missioncontrol\\"));
-            assertNoRegKey(REGISTRY_ENV_PATH, "JAVA_HOME");
-            assertNoRegKey(REGISTRY_ENV_PATH, "OJDKBUILD_JAVA_HOME");
-            assertNoRegKey(REGISTRY_ENV_PATH, "REDHAT_JAVA_HOME");
+            assertPath("jdk/bin");
+            assertPath("jdk/bin/java.exe");
+            assertPath("jdk/bin/server/jvm.dll");
+            assertPath("jdk/lib/modules");
+            assertPath("jdk/conf");
+            assertPath("jdk/include");
+            assertPath("jdk/jmods");
+            assertPath("jdk/legal");
+            assertPath("jdk/lib");
             assertPath("jdk/missioncontrol");
-            assertNoPath("jdk/bin");
 
         } finally {
             uninstall();

@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
-import static support.Assert.assertPath;
+import java.nio.file.Paths;
+
+import static support.Assert.*;
 import static support.Install.install;
 import static support.Uninstall.uninstall;
 
@@ -23,22 +25,23 @@ import static support.Uninstall.uninstall;
  * @library ..
  */
 
-public class AllFeaturesLatestTest {
+public class RegistryRuntime17Test {
 
     public static void main(String[] args) throws Exception {
-        install("ADDLOCAL=ALL");
+        install("ADDLOCAL=jdk_registry_runtime");
         try {
 
-            assertPath("jdk/bin");
+            // todo: checks with version
+
+            String scratchDir = Paths.get("").toAbsolutePath().toString();
+            assertRegKey("HKLM\\Software\\JavaSoft\\JDK\\17",
+                    "JavaHome", scratchDir + "\\jdk\\");
+            assertRegKey("HKLM\\Software\\JavaSoft\\JDK\\17",
+                    "RuntimeLib", scratchDir + "\\jdk\\bin\\server\\jvm.dll");
             assertPath("jdk/bin/java.exe");
             assertPath("jdk/bin/server/jvm.dll");
             assertPath("jdk/lib/modules");
-            assertPath("jdk/conf");
-            assertPath("jdk/include");
-            assertPath("jdk/jmods");
-            assertPath("jdk/legal");
-            assertPath("jdk/lib");
-            assertPath("jdk/missioncontrol");
+            assertNoPath("jdk/missioncontrol");
 
         } finally {
             uninstall();

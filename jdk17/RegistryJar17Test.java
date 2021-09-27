@@ -16,8 +16,7 @@
 
 import java.nio.file.Paths;
 
-import static support.Assert.assertPath;
-import static support.Assert.assertRegKey;
+import static support.Assert.*;
 import static support.Install.install;
 import static support.Uninstall.uninstall;
 
@@ -26,7 +25,7 @@ import static support.Uninstall.uninstall;
  * @library ..
  */
 
-public class RegistryJarLatestJreTest {
+public class RegistryJar17Test {
 
     public static void main(String[] args) throws Exception {
         install("ADDLOCAL=jdk_registry_jar");
@@ -41,13 +40,14 @@ public class RegistryJarLatestJreTest {
                     "", "JAR File");
             assertRegKey("HKLM\\Software\\Classes\\JARFile",
                     "EditFlags", "0x10000");
-            //assertRegKey("HKLM\\Software\\Classes\\JARFile\\Shell\\Open",
-            //        "", "&amp;Launch with ${${PROJECT_NAME}_VENDOR_SHORT} OpenJDK");
+            assertRegKey("HKLM\\Software\\Classes\\JARFile\\Shell\\Open",
+                    "", "&Launch with OpenJDK");
             assertRegKey("HKLM\\Software\\Classes\\JARFile\\Shell\\Open\\Command",
                     "", "\"" + scratchDir + "\\jdk\\bin\\javaw.exe\" -jar \"%1\" %*");
             assertPath("jdk/bin/java.exe");
             assertPath("jdk/bin/server/jvm.dll");
             assertPath("jdk/lib/modules");
+            assertNoPath("jdk/missioncontrol");
 
         } finally {
             uninstall();
